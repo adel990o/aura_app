@@ -1,37 +1,25 @@
-name: Build Aura APK
+name: aura_app
+description: Aura - AI Daily Summary App
+publish_to: 'none'
+version: 1.0.0+1
 
-on:
-  workflow_dispatch:
-  push:
-    branches: [ main ]
+environment:
+  sdk: '>=2.19.0 <4.0.0'
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'zulu'
-          java-version: '17'
-      
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.16.0'
-          channel: 'stable'
-      
-      - name: Get dependencies
-        run: flutter pub get
-      
-      - name: Build APK
-        run: flutter build apk --release
-      
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: aura-app-release
-          path: build/app/outputs/flutter-apk/app-release.apk
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.5
+  
+  # الحزم الأساسية لتطبيقك
+  sqflite: ^2.3.0
+  path: ^1.9.0
+  provider: ^6.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
